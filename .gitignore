@@ -1,2 +1,4 @@
-node_modules
-src-tauri/target
+front/node_modules
+back/node_modules
+back/.env
+front/src-tauri/target

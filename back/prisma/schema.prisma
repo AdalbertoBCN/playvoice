@@ -13,8 +13,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model usuarios {
-  id String @id @default(auto()) @map("_id") @db.ObjectID
-  nome String
-  
+model users {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
 }
+

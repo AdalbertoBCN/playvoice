@@ -1,32 +1,39 @@
+import { PrismaClient } from "@prisma/client";
 import fastify from "fastify";
 import { z } from "zod";
-import {PrismaClient } from "@prisma/client";
 
-const app = fastify()
+const prisma = new PrismaClient();
 
-const prisma =  new PrismaClient ({
-    log: ['query'],
-})
+const app = fastify();
 
-app.get("/", async  (res, request) => {
-    const createEventSchema = z.object({
-            id: z.string(),
-            nome: z.string(),
-    })
+const createUserSchema = z.object({
+  name: z.string(),
+});
 
-    const  data = createEventSchema.parse(request.body)
+app.get("/users", async (req, res) => {
 
-const usuarios = await prisma.usuarios.create({
-        data:{
-            id: data.id,
-            nome: data.nome,
-        }
-    })
+  const users = await prisma.users.findMany();
 
-    return {usuariosId: usuarios.id}
+  return res.status(200).send(users);
+});
 
-})
+app.post("/users", async (req, res) => {
+  const user = createUserSchema.parse(req.body);
+    console.log(user)
+
+  const createdUser = await prisma.users.create({
+    data: {
+        name: user.name,
+    },
+  });
+  
+  console.log(createdUser)
+
+  return res.status(200).send({
+    id: createdUser.id,
+  });
+});
 
 app.listen({ port: 3333 }).then(() => {
-    console.log("HTTP server running!");
-})
+  console.log("HTTP server running!");
+});

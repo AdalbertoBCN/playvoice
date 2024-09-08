@@ -94,7 +94,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
             role="combobox"
             aria-expanded={open}
             aria-label="Select a team"
-            className={cn("w-[200px] justify-between max-md:text-nowrap", className)}
+            className={cn("w-[200px] justify-between", className)}
           >
             <Avatar className="mr-2 h-5 w-5">
               <AvatarImage
@@ -104,7 +104,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
               <AvatarFallback>SC</AvatarFallback>
             </Avatar>
             {selectedTeam.label}
-            <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50 max-md:ml-1" />
+            <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
