@@ -20,9 +20,17 @@ import { RecentSales } from "@/components/recent-sales"
 import { Search } from "@/components/search"
 import TeamSwitcher from "@/components/team-switcher"
 import { UserNav } from "@/components/user-nav"
+import useLobby from "@/hooks/useLobby"
+import useMatchmaking from "@/hooks/useMatchmaking"
+import useChampSelect from "@/hooks/useChampSelect"
 
 
 export default function DashboardPage() {
+  // const lobby = useLobby();
+  // const match = useMatchmaking();
+
+  const champSelect = useChampSelect();
+
   return (
     <>
       <div className="flex-col md:flex">
@@ -38,7 +46,11 @@ export default function DashboardPage() {
         </div>
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+            <h2 className="text-3xl font-bold tracking-tight">
+              <pre>
+                {JSON.stringify(champSelect, null, 2)}
+              </pre>
+              </h2>
             <div className="flex items-center space-x-2">
               <CalendarDateRangePicker />
               <Button>Download</Button>
@@ -49,7 +61,7 @@ export default function DashboardPage() {
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="analytics" disabled>
                 Analytics
-              </TabsTrigger>
+                </TabsTrigger>
               <TabsTrigger value="reports" disabled>
                 Reports
               </TabsTrigger>
