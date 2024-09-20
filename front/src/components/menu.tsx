@@ -25,6 +25,7 @@ import {
 import { AboutDialog } from "./about-dialog"
 import { MenuModeToggle } from "./menu-mode-toggle"
 import { Dialog, DialogTrigger } from "./ui/dialog"
+import { SysButtons } from "./sys-buttons"
 
 export function Menu() {
   const closeWindow = useCallback(async () => {
@@ -35,6 +36,9 @@ export function Menu() {
 
   return (
     <WindowTitlebar
+      windowControlsProps={{
+        hide: true,
+      }}
     // controlsOrder="platform"
     // windowControlsProps={{ platform: "macos", className: "" }}
     >
@@ -207,6 +211,7 @@ export function Menu() {
 
         <MenuModeToggle />
       </Menubar>
+      <SysButtons />
     </WindowTitlebar>
   )
 }

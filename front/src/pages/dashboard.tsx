@@ -23,6 +23,7 @@ import { UserNav } from "@/components/user-nav"
 import useLobby from "@/hooks/useLobby"
 import useMatchmaking from "@/hooks/useMatchmaking"
 import useChampSelect from "@/hooks/useChampSelect"
+import { SignedIn, UserButton } from "@clerk/clerk-react"
 
 
 export default function DashboardPage() {
@@ -40,7 +41,9 @@ export default function DashboardPage() {
             <MainNav className="mx-6" />
             <div className="ml-auto flex items-center space-x-4">
               <Search />
-              <UserNav />
+              <SignedIn>
+            <UserButton />
+          </SignedIn>
             </div>
           </div>
         </div>

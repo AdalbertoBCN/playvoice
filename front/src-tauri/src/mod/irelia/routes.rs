@@ -7,7 +7,13 @@ use super::types::{LobbyRoot, MatchRoot, ChampSelectRoot};
 #[tauri::command]
 pub async fn get_matchmaking_data() -> Option<MatchRoot> {
     let request_client = RequestClient::new();
-    let lcu_client = LcuClient::new(false).unwrap();
+    let lcu_client = LcuClient::new(false);
+
+    // Verifica se o cliente foi criado com sucesso
+    let lcu_client = match lcu_client {
+        Ok(client) => client,
+        Err(_) => return None, // Retorna None se o cliente não puder ser criado
+    };
 
     let json: Result<Option<Value>, Error> = lcu_client.get("/lol-matchmaking/v1/search", &request_client).await;
 
@@ -27,7 +33,13 @@ pub async fn get_matchmaking_data() -> Option<MatchRoot> {
 #[tauri::command]
 pub async fn get_lobby_data() -> Option<LobbyRoot> {
     let request_client = RequestClient::new();
-    let lcu_client = LcuClient::new(false).unwrap();
+    let lcu_client = LcuClient::new(false);
+
+    // Verifica se o cliente foi criado com sucesso
+    let lcu_client = match lcu_client {
+        Ok(client) => client,
+        Err(_) => return None, // Retorna None se o cliente não puder ser criado
+    };
 
     let json: Result<Option<Value>, Error> = lcu_client.get("/lol-lobby/v2/lobby", &request_client).await;
 
@@ -47,7 +59,13 @@ pub async fn get_lobby_data() -> Option<LobbyRoot> {
 #[tauri::command]
 pub async fn get_champ_select_data() -> Option<ChampSelectRoot> {
     let request_client = RequestClient::new();
-    let lcu_client = LcuClient::new(false).unwrap();
+    let lcu_client = LcuClient::new(false);
+
+    // Verifica se o cliente foi criado com sucesso
+    let lcu_client = match lcu_client {
+        Ok(client) => client,
+        Err(_) => return None, // Retorna None se o cliente não puder ser criado
+    };
 
     let json: Result<Option<Value>, Error> = lcu_client.get("/lol-champ-select/v1/session", &request_client).await;
 
