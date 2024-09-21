@@ -1,38 +1,36 @@
-import { PrismaClient } from "@prisma/client";
 import fastify from "fastify";
-import { z } from "zod";
+import { serializerCompiler, validatorCompiler, ZodTypeProvider } from "fastify-type-provider-zod";
 
-const prisma = new PrismaClient();
+import { createUserRoutes } from "./routes/user/create-user";
+import { getUserRoute } from "./routes/user/get-user";
+import { updateUserRoutes } from "./routes/user/update-user";
+import { deleteUserRoutes } from "./routes/user/delete-user";
 
-const app = fastify();
+import { createGamesRoutes } from "./routes/games/create-games";
+import { getGamesRoute } from "./routes/games/get-games";
+import { deleteGamesRoutes } from "./routes/games/delete-games";
+import { updateGamesRoutes } from "./routes/games/update-games";
+import { createUserGamesRoutes } from "./routes/user/create-user-games";
 
-const createUserSchema = z.object({
-  name: z.string(),
-});
 
-app.get("/users", async (req, res) => {
+const app = fastify().withTypeProvider<ZodTypeProvider>();
 
-  const users = await prisma.users.findMany();
+app.setValidatorCompiler(validatorCompiler)
+app.setSerializerCompiler(serializerCompiler)
 
-  return res.status(200).send(users);
-});
+app.register(createUserGamesRoutes);
+app.register(createUserRoutes);
+app.register(getUserRoute);
+app.register(updateUserRoutes);
+app.register(deleteUserRoutes);
 
-app.post("/users", async (req, res) => {
-  const user = createUserSchema.parse(req.body);
-    console.log(user)
+app.register(createGamesRoutes);
+app.register(getGamesRoute);
+app.register(deleteGamesRoutes);
+app.register(updateGamesRoutes);
 
-  const createdUser = await prisma.users.create({
-    data: {
-        name: user.name,
-    },
-  });
-  
-  console.log(createdUser)
 
-  return res.status(200).send({
-    id: createdUser.id,
-  });
-});
+
 
 app.listen({ port: 3333 }).then(() => {
   console.log("HTTP server running!");

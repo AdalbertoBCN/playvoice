@@ -16,5 +16,18 @@ datasource db {
 model users {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
+  status        Boolean         @default(true)
+  games userGames[]
+}
+
+model games {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  status        Boolean         @default(true)
+  name String
+}
+
+type userGames {
+     gameId String
+     gameUserId String
 }
 
