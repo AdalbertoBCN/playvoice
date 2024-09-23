@@ -70,13 +70,11 @@
         "fullscreen": false,
         "title": "front",
         "center": true,
-        "resizable": true,
+        "resizable": false,
         "decorations": false,
         "transparent": true,
-        "height": 920,
-        "width": 1300,
-        "minWidth": 630,
-        "minHeight": 320
+        "height": 720,
+        "width": 1280
       }
     ]
   }
