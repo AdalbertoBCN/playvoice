@@ -17,6 +17,7 @@ model users {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
   status        Boolean         @default(true)
+  image image?
   games userGames[]
 }
 
@@ -29,5 +30,10 @@ model games {
 type userGames {
      gameId String
      gameUserId String
+}
+
+type image {
+   filename String
+   path String
 }
 

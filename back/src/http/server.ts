@@ -1,5 +1,8 @@
 import fastify from "fastify";
 import { serializerCompiler, validatorCompiler, ZodTypeProvider } from "fastify-type-provider-zod";
+import fastifyMultipart from "@fastify/multipart";
+import path from "path";
+import fs from "fs";
 
 import { createUserRoutes } from "./routes/user/create-user";
 import { getUserRoute } from "./routes/user/get-user";
@@ -11,12 +14,20 @@ import { getGamesRoute } from "./routes/games/get-games";
 import { deleteGamesRoutes } from "./routes/games/delete-games";
 import { updateGamesRoutes } from "./routes/games/update-games";
 import { createUserGamesRoutes } from "./routes/user/create-user-games";
+import { uploadImagesRoutes } from "./routes/images/upload-image";
 
+export const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
+
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
+
+app.register(fastifyMultipart);
 
 app.register(createUserGamesRoutes);
 app.register(createUserRoutes);
@@ -29,7 +40,12 @@ app.register(getGamesRoute);
 app.register(deleteGamesRoutes);
 app.register(updateGamesRoutes);
 
+app.register(uploadImagesRoutes);
 
+app.register(require('@fastify/static'), {
+  root: uploadDir,
+  prefix: '/uploads/', 
+})
 
 
 app.listen({ port: 3333 }).then(() => {
