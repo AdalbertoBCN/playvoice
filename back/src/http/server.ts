@@ -27,7 +27,9 @@ const app = fastify().withTypeProvider<ZodTypeProvider>();
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
-app.register(fastifyMultipart);
+app.register(fastifyMultipart,{
+  attachFieldsToBody: true
+});
 
 app.register(createUserGamesRoutes);
 app.register(createUserRoutes);

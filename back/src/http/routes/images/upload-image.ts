@@ -10,14 +10,15 @@ import fastifyMultipart from '@fastify/multipart';
 export const uploadImagesRoutes: FastifyPluginAsyncZod = async function (app) {
     // Register multipart support if not already done globally
 
-    app.put("/uploads", {
+    app.post("/uploads", {
         schema: {
 
         }
     }, async (req, reply) => {
         try {
            
-            const data = await req.file();  // Fastify-multipart for handling file uploads
+            const {image:data} = req.body as any;  // Fastify-multipart for handling file uploads
+            const file = data.toBuffer()
             if (!data) {
                 return reply.status(400).send({ error: "No file uploaded" });
             }
@@ -31,7 +32,7 @@ export const uploadImagesRoutes: FastifyPluginAsyncZod = async function (app) {
             }
 
             // Stream the uploaded file to disk
-            await pipeline(data.file, fs.createWriteStream(filePath));
+            await pipeline(file, fs.createWriteStream(filePath));
 
             // Return a success response
             reply.status(200).send({ message: "File uploaded successfully", filename });

@@ -8,11 +8,12 @@ export const updateUserRoutes: FastifyPluginAsyncZod = async function (app) {
             body: z.object({
                 id: z.string(),
                 name: z.string().optional(),
+                description: z.string().optional(),
                 
             }),
         }
     }, async (req) => {
-        const { id, name} = req.body
+        const { id, name,description} = req.body
 
         await prisma.users.update({
             where: {
@@ -20,7 +21,7 @@ export const updateUserRoutes: FastifyPluginAsyncZod = async function (app) {
             },
             data: {
                 name,
-        
+                description,
             }
         });
     })
