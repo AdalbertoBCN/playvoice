@@ -1457,6 +1457,8 @@ checksum = "28b29a3cd74f0f4598934efe3aeba42bae0eb4680554128851ebbecb02af14e6"
 [[package]]
 name = "irelia"
 version = "0.8.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "400864c5fe25d8ce5663d25411d178841c2782192517449f8e218a6bedcf47ef"
 dependencies = [
  "hashlink",
  "http-body-util",
@@ -1483,6 +1485,8 @@ dependencies = [
 [[package]]
 name = "irelia_encoder"
 version = "0.1.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b5693f1ba4730c003e6e573b875abb054b9f8b175d03824ccac56fc9ae2611cc"
 
 [[package]]
 name = "is-docker"

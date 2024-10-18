@@ -15,6 +15,9 @@ import { deleteGamesRoutes } from "./routes/games/delete-games";
 import { updateGamesRoutes } from "./routes/games/update-games";
 import { createUserGamesRoutes } from "./routes/user/create-user-games";
 import { uploadImagesRoutes } from "./routes/images/upload-image";
+import { generateTokenRoutes } from "./voice-chat/generate-token";
+
+import cors from "@fastify/cors"
 
 export const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
@@ -23,12 +26,15 @@ if (!fs.existsSync(uploadDir)) {
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
-
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
 app.register(fastifyMultipart,{
   attachFieldsToBody: true
+});
+
+app.register(cors, {
+  origin: "*", 
 });
 
 app.register(createUserGamesRoutes);
@@ -43,6 +49,8 @@ app.register(deleteGamesRoutes);
 app.register(updateGamesRoutes);
 
 app.register(uploadImagesRoutes);
+
+app.register(generateTokenRoutes);
 
 app.register(require('@fastify/static'), {
   root: uploadDir,

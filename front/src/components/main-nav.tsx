@@ -16,10 +16,10 @@ export function MainNav({
         Overview
       </a>
       <a
-        href="/examples/dashboard"
+        href="/chat-voice"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        Customers
+        Chat Voice
       </a>
       <a
         href="/examples/dashboard"
