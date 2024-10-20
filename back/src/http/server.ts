@@ -8,6 +8,8 @@ import { createUserRoutes } from "./routes/user/create-user";
 import { getUserRoute } from "./routes/user/get-user";
 import { updateUserRoutes } from "./routes/user/update-user";
 import { deleteUserRoutes } from "./routes/user/delete-user";
+import { addFriendRoutes } from "./routes/user/add-friend";
+import { blockFriendRoutes } from "./routes/user/block-friend";
 
 import { createGamesRoutes } from "./routes/games/create-games";
 import { getGamesRoute } from "./routes/games/get-games";
@@ -42,6 +44,9 @@ app.register(createUserRoutes);
 app.register(getUserRoute);
 app.register(updateUserRoutes);
 app.register(deleteUserRoutes);
+app.register(addFriendRoutes);
+app.register(blockFriendRoutes);
+
 
 app.register(createGamesRoutes);
 app.register(getGamesRoute);
