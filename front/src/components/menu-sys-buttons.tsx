@@ -19,7 +19,7 @@ export function MenuSysButtons() {
       windowControlsProps={{
         hide: true
       }}
-      className="bg-[#242424]"
+      className="bg-[#242424] sticky top-0 z-50"
 
     // controlsOrder="platform"
     // windowControlsProps={{ platform: "macos", className: "" }}

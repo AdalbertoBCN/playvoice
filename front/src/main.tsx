@@ -1,22 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import "./globals.css";
 
-import { ClerkProvider } from '@clerk/clerk-react'
-import { ThemeProvider } from "./components/theme-provider";
-import { Menu } from "./components/menu";
-import { cn } from "./lib/utils";
+import { ClerkProvider } from '@clerk/clerk-react';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { TailwindIndicator } from "./components/tailwind-indicator";
+import { ThemeProvider } from "./components/theme-provider";
+import ProtectedLayout from "./layouts/protected-layout";
 import PublicLayout from "./layouts/public-layout";
+import { cn } from "./lib/utils";
+import { ChatVoice } from "./pages/chat-voice";
+import DashboardPage from "./pages/dashboard";
+import HomeTest from "./pages/home-test";
 import SignInPage from "./pages/sign-in";
 import SignUpPage from "./pages/sign-up";
-import HomeTest from "./pages/home-test";
-import ProtectedLayout from "./layouts/protected-layout";
-import DashboardPage from "./pages/dashboard";
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import { MenuSysButtons } from "./components/menu-sys-buttons";
-import { invoke } from "@tauri-apps/api/tauri";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -37,16 +34,16 @@ const router = createBrowserRouter([
     element: <ProtectedLayout />,
     children: [
       { path: '/dashboard', element: <DashboardPage /> },
+      { path: '/chat-voice', element: <ChatVoice /> },
     ],
   },
 ]);
-
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}
     >
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
         <div className="h-screen overflow-clip">
 
           <div
