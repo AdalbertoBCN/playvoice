@@ -19,6 +19,8 @@ model users {
   status        Boolean         @default(true)
   image String?
   description String?
+  friends String[]
+  blockedUsers String[]
   games userGames[]
 }
 
