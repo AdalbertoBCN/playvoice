@@ -18,11 +18,11 @@ export default function SignInPage() {
           footerAction: 'bg-[#101010]',
           footerActionText: 'text-[#ffffff]',
           footerActionLink: 'text-[#ffffff]',
-          socialButtonsBlockButton: 'bg-white',
+          socialButtonsBlockButton: 'bg-white hover:bg-gray-300',
           headerTitle: 'text-white',
           formFieldLabel: 'text-[#ffffff]',
           dividerText: 'text-[#ffffff]',
-          formButtonPrimary: 'bg-[#0F172A] hover:bg-slate-400 text-[#ffffff] text-sm',
+          formButtonPrimary: 'bg-[#0F172A] hover:bg-slate-600 text-[#ffffff] text-sm',
         },
       }}
       path="/sign-in" signUpUrl='/sign-up' signUpForceRedirectUrl="/dashboard" forceRedirectUrl="/dashboard" />

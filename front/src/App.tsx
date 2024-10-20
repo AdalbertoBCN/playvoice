@@ -3,7 +3,7 @@ import DashboardPage from "./pages/dashboard"
 function App() {
   return (
     <>
-    <DashboardPage />
+      <DashboardPage />
     </>
   )
 }
