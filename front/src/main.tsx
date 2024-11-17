@@ -14,6 +14,7 @@ import DashboardPage from "./pages/dashboard"
 import Home from "./pages/home"
 import SignInPage from "./pages/sign-in"
 import SignUpPage from "./pages/sign-up"
+import ProfilePage from "./pages/profile"
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/dashboard", element: <DashboardPage /> },
       { path: "/chat-voice", element: <ChatVoice /> },
+      { path: "/profile", element: <ProfilePage/> },
     ],
   },
 ])

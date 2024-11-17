@@ -1,18 +1,22 @@
-import { SignedIn, UserButton, useUser } from "@clerk/clerk-react"
+import { SignedIn, UserButton } from "@clerk/clerk-react"
 import { Button } from "./ui/button"
+import { Link } from "react-router-dom"
+import { usePUser } from "@/hooks/usePUser"
 
 export default function TopNavbar() {
-  const { user } = useUser()
+  const { user } = usePUser()
 
   return (
     <div className="flex items-center justify-between bg-[#101010] px-2 py-4">
+        <Link to="/dashboard">
       <section>
         <img
           src="/PlayVoiceLogo.png"
           alt="Logo PlayVoice"
           className="h-12 w-16"
-        />
+          />
       </section>
+          </Link>
       <section className="flex items-center">
         <Button className="bg-[#1A3472] text-white hover:bg-[#253d75]">
             Ver Jogos
@@ -26,10 +30,10 @@ export default function TopNavbar() {
       </section>
       <section className="flex items-center gap-2">
         <SignedIn>
-          {user?.firstName}
-          {user?.lastName}
-          {user?.username}
-          <UserButton />
+          {user?.name}
+          <UserButton 
+            userProfileUrl="/profile"
+          />
         </SignedIn>
       </section>
     </div>
