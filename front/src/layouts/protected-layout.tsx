@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useAuth, useUser } from '@clerk/clerk-react'
+import { useUser } from '@clerk/clerk-react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { MenuSysButtons } from '@/components/menu-sys-buttons'
 import { usePUser } from '@/hooks/usePUser'
@@ -13,10 +13,11 @@ export default function ProtectedLayout() {
     if (user){
       setUser(user.id, user.imageUrl, user.fullName ?? "name")
     }
+
     if (isLoaded && !user) {
       navigate('/sign-in')
     }
-  }, [isLoaded])
+  }, [isLoaded, user])
 
   if (!isLoaded) return 'Loading...'
 

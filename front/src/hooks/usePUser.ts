@@ -16,9 +16,13 @@ interface PUser {
             name: string;
         }[]
     }
-    setUser: (userId:string, image:string, name:string) => void;
-    addFriend: (friendId: string) => void;
-    blockFriend: (friendId: string) => void;
+    setUser: (userId: string, image: string, name: string) => void;
+    addFriend: (friendId: {
+        id: string;
+        name: string;
+        image: string
+    }, id: string) => void;
+    blockFriend: (id:string, friendId: string) => void;
     updateUser: (user: Partial<PUser["user"]>) => void;
 }
 
@@ -32,39 +36,75 @@ export const usePUser = create<PUser>((set) => ({
         games: []
     },
     setUser: (userId, image, name) => {
+
+        if(!userId) return;
+
         (async () => {
-            
+
             try {
-            const response = await fetch("http://localhost:3333/user/".concat(String(userId)));
-            const res = await response.json();
+                const response = await fetch("http://localhost:3333/user/".concat(String(userId)));
+                const res = await response.json();
 
-            console.log(response.status);
+                if (response.status === 404) {
+                    // Create user logic here
+                    const pUser = await fetch("http://localhost:3333/users/".concat(String(userId)), {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ name, image })
+                    }).then(res => res.json());
 
-            if (response.status === 404) {
-                // Create user logic here
-                const pUser = await fetch("http://localhost:3333/users/".concat(String(userId)), {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ name, image })
-                }).then(res => res.json());
+                    set({ user: pUser.user });
+                }
 
-                set({ user: pUser.user});
-            }
-
-            set({ user: res.user });
+                set({ user: res.user });
 
             } catch (error) {
-            console.error("Error fetching user:", error);
+                console.error("Error fetching user:", error);
             }
         })();
     },
-    addFriend: (friendId: string) => {
-        // Implementation for adding a friend
+    addFriend: async (friend, id) => {
+
+        const response = await fetch("http://localhost:3333/add-friend", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id,
+                friendId: friend.id
+            })
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || "Failed to add friend");
+        }
+
+        set((state) => ({
+            user: {
+                ...state.user,
+                friends: [
+                    ...state.user.friends,
+                    friend
+                ]
+            }
+        }))
+
     },
-    blockFriend: (friendId: string) => {
-        // Implementation for blocking a friend
+    blockFriend: async (id:string, friendId: string) => {
+        await fetch("http://localhost:3333/block-friend", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id,
+                friendId
+            })
+        })
     },
     updateUser: async (user: Partial<PUser["user"]>) => {
         // put /users
