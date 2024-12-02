@@ -20,6 +20,9 @@ import { uploadImagesRoutes } from "./routes/images/upload-image";
 import { generateTokenRoutes } from "./voice-chat/generate-token";
 
 import cors from "@fastify/cors"
+import { getUsersRoute } from "./routes/user/get-users";
+import { sendMessageRoute } from "./routes/messages/send-message";
+import { getChatsRoute } from "./routes/messages/get-chats";
 
 export const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
@@ -42,10 +45,13 @@ app.register(cors, {
 app.register(createUserGamesRoutes);
 app.register(createUserRoutes);
 app.register(getUserRoute);
+app.register(getUsersRoute);
 app.register(updateUserRoutes);
 app.register(deleteUserRoutes);
 app.register(addFriendRoutes);
 app.register(blockFriendRoutes);
+app.register(sendMessageRoute);
+app.register(getChatsRoute);
 
 
 app.register(createGamesRoutes);

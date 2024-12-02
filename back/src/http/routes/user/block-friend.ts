@@ -11,23 +11,25 @@ export const blockFriendRoutes: FastifyPluginAsyncZod = async function (app) {
             }),
         }
     }, async (req) => {
-        const { id,friendId } = req.body
+        const { id, friendId } = req.body
 
-        const user=await prisma.users.findUnique({
+        const user = await prisma.users.findUnique({
             where:{
                 id
             }
         })
+
         if (!user) throw new Error("usuário não encontrado")
             
         if (user.blockedUsers.includes(friendId)) throw new Error("você já bloqueou este usuário")
     
         await prisma.users.update({
-            where: {id},
+            where: {
+                id
+            },
             data: {
                 blockedUsers:{
                     push:friendId
-
                 }
             }
         });

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/http/server.ts"
+    "dev": "tsx watch src/http/server.ts",
+    "db:create": "sudo docker compose up -d && sleep 5 && sudo docker exec -it playvoice mongosh -u playvoice -p playvoice --eval \"rs.initiate({_id: 'rs0', members: [{_id: 0, host: 'localhost:27017'}]})\" && sleep 2 && sudo docker exec -it playvoice mongosh -u playvoice -p playvoice --eval 'rs.status()'"
   },
   "keywords": [],
   "author": "",

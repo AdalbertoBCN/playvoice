@@ -11,13 +11,14 @@ export const addFriendRoutes: FastifyPluginAsyncZod = async function (app) {
             }),
         }
     }, async (req) => {
-        const { id,friendId } = req.body
+        const { id, friendId } = req.body;
 
-        const user=await prisma.users.findUnique({
+        const user = await prisma.users.findUnique({
             where:{
                 id
             }
         })
+
         if (!user) throw new Error("usuario não encontrado")
             
         if (user.friends.includes(friendId)) throw new Error("você já é amigo deste usuário")
@@ -25,10 +26,24 @@ export const addFriendRoutes: FastifyPluginAsyncZod = async function (app) {
         if (user.blockedUsers.includes(friendId)) throw new Error("você bloqueou este usuário")
     
         await prisma.users.update({
-            where: {id},
+            where: {
+                id
+            },
             data: {
                 friends:{
                     push:friendId
+
+                }
+            }
+        });
+
+        await prisma.users.update({
+            where: {
+                id: friendId
+            },
+            data: {
+                friends:{
+                    push:id
 
                 }
             }

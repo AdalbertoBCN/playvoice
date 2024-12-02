@@ -35,4 +35,20 @@ type userGames {
      gameUserId String
 }
 
+type Message {
+  id        String 
+  content   String
+  senderId  String    // ID do usuário que enviou
+  createdAt DateTime  @default(now())
+}
 
+model Chat {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  user1Id   String    // ID do primeiro usuário
+  user2Id   String    // ID do segundo usuário
+  messages  Message[] // Array de mensagens
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([user1Id, user2Id])
+}

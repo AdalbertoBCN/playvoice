@@ -26,7 +26,8 @@ export const getUserRoute: FastifyPluginAsyncZod = async function (app) {
         const friends = await prisma.users.findMany({
             where: {
                 id: {
-                    in: user.friends
+                    in: user.friends,
+                    notIn: user.blockedUsers
                 }
             },
             select:{
@@ -55,7 +56,7 @@ export const getUserRoute: FastifyPluginAsyncZod = async function (app) {
             user: {
                 ...user,
                 image: user.image ?? "",
-                friends,
+                friends: friends ?? [],
                 games
             }
         }
