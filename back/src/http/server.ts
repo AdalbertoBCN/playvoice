@@ -23,6 +23,7 @@ import cors from "@fastify/cors"
 import { getUsersRoute } from "./routes/user/get-users";
 import { sendMessageRoute } from "./routes/messages/send-message";
 import { getChatsRoute } from "./routes/messages/get-chats";
+import { setupSwagger } from "./swaggerConfig";
 
 export const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
@@ -33,6 +34,7 @@ const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
+setupSwagger(app);
 
 app.register(fastifyMultipart,{
   attachFieldsToBody: true
