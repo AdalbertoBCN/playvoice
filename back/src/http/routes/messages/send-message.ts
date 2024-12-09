@@ -10,7 +10,10 @@ export const sendMessageRoute: FastifyPluginAsyncZod = async function (app) {
                 user2Id: z.string(),
                 content: z.string()
 
-            })
+            }),
+            tags:["Chat"],
+            summary: 'Enviar mensagem entre usuários',
+            description: 'Esta rota envia mensagens no chat.',
         }
     }, async (req) => {
         const { content, user1Id, user2Id } = req.body

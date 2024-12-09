@@ -10,6 +10,9 @@ export const updateUserRoutes: FastifyPluginAsyncZod = async function (app) {
                 name: z.string().optional(),
                 description: z.string().optional(),    
             }),
+            tags:["Usuário"],
+            summary: 'Atualiza um usuário',
+            description: 'Esta rota atualiza um usuário.',
         }
     }, async (req) => {
         const { id, name,description} = req.body

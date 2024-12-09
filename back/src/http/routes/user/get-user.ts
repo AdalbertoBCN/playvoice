@@ -7,7 +7,10 @@ export const getUserRoute: FastifyPluginAsyncZod = async function (app) {
         schema:{
             params:z.object({
                 id:z.string()
-            })
+            }),
+            tags:["Usuário"],
+            summary: 'Busca um usuário',
+            description: 'Esta rota busca um usuário.',
         }
     }, async (req, res) => {
         const {id} = req.params

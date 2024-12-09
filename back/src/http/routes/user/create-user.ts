@@ -28,8 +28,12 @@ export const createUserRoutes: FastifyPluginAsyncZod = async function (app) {
                                 name: z.string(),
                           }))
                    })
-                })
-            }
+                }).describe("Usuário criado com sucesso")
+                
+            },
+            tags:["Usuário"],
+            summary: 'Criar um usuário',
+            description: 'Esta rota cria um usuário.',
         }
     }, async (req, res) => {
         const { name, image } = req.body

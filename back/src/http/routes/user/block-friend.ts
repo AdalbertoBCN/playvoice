@@ -9,6 +9,9 @@ export const blockFriendRoutes: FastifyPluginAsyncZod = async function (app) {
                 id: z.string(),
                 friendId: z.string(),
             }),
+            tags:["Usuário"],
+            summary: 'Bloquear amigo',
+            description: 'Esta rota bloqueia um amigo.',
         }
     }, async (req) => {
         const { id, friendId } = req.body

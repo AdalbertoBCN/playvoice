@@ -8,6 +8,9 @@ export const deleteUserRoutes: FastifyPluginAsyncZod = async function (app) {
             body: z.object({
                 id: z.string()
             }),
+            tags:["Usuário"],
+            summary: 'Deleta um usuário',
+            description: 'Esta rota deleta um usuário.',
         }
     }, async (req) => {
         const { id } = req.body

@@ -11,6 +11,9 @@ export const createUserGamesRoutes: FastifyPluginAsyncZod = async function (app)
                 gameId: z.string(),
                 gameUserId: z.string()
             }),
+            tags:["Usuário"],
+            summary: 'Adicionar jogo ao perfil de um usuário',
+            description: 'Esta rota adiciona um jogo.',
         }
     }, async (req) => {
         const { userId, gameId, gameUserId } = req.body

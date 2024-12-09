@@ -9,6 +9,9 @@ export const addFriendRoutes: FastifyPluginAsyncZod = async function (app) {
                 id: z.string(),
                 friendId: z.string(),
             }),
+            tags:["Usuário"],
+            summary: 'Adicionar amigo',
+            description: 'Esta rota adiciona um amigo.',
         }
     }, async (req) => {
         const { id, friendId } = req.body;

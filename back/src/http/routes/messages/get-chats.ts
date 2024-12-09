@@ -7,7 +7,10 @@ export const getChatsRoute: FastifyPluginAsyncZod = async function (app) {
         schema: {
             params: z.object({
                 id: z.string(),
-            })
+            }),
+            tags:["Chat"],
+            summary: 'Buscar chat entre usuários',
+            description: 'Esta rota busca um chat',
         }
     }, async (req) => {
         const { id } = req.params
