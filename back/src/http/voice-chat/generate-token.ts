@@ -3,6 +3,7 @@ import { env } from "../../env";
 
 export const generateTokenRoutes: FastifyPluginAsyncZod = async function (app) {
     app.get("/chat-token", async (req) => {
+  
         const { AccessToken } = await import("livekit-server-sdk");
 
         const createToken = async () => {

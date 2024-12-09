@@ -8,6 +8,9 @@ export const createGamesRoutes: FastifyPluginAsyncZod = async function (app) {
             body: z.object({
                 name: z.string(),
             }),
+            tags:["Games"],
+            summary: 'Adicionar um jogo',
+            description: 'Esta rota adiciona um jogo.',
         }
     }, async (req) => {
         const { name } = req.body
