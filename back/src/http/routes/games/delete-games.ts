@@ -8,6 +8,9 @@ export const deleteGamesRoutes: FastifyPluginAsyncZod = async function (app) {
             body: z.object({
                 id: z.string()
             }),
+            tags:["Games"],
+            summary: 'Deletar um jogo',
+            description: 'Esta rota remove um jogo.',
         }
     }, async (req) => {
         const { id } = req.body

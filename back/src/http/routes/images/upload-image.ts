@@ -12,7 +12,9 @@ export const uploadImagesRoutes: FastifyPluginAsyncZod = async function (app) {
 
     app.post("/uploads", {
         schema: {
-
+            tags:["Imagem"],
+            summary: 'Adicionar uma imagem',
+            description: 'Esta rota realiza o upload de uma imagem.',
         }
     }, async (req, reply) => {
         try {

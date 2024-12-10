@@ -10,6 +10,9 @@ export const updateGamesRoutes: FastifyPluginAsyncZod = async function (app) {
                 name: z.string().optional(),
                 
             }),
+            tags:["Games"],
+            summary: 'Atualizar um jogo',
+            description: 'Esta rota atualiza um jogo.',
         }
     }, async (req) => {
         const { id, name} = req.body
