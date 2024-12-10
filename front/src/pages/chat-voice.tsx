@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { LiveKitRoom, AudioConference } from '@livekit/components-react';
 import '@livekit/components-styles'; // Estilos do LiveKit
+import useChampSelect from '@/hooks/useChampSelect';
+import { usePUser } from '@/hooks/usePUser';
 
 const VITE_PUBLIC_LK_SERVER_URL = import.meta.env.VITE_PUBLIC_LK_SERVER_URL;
 
@@ -9,6 +11,8 @@ if (!VITE_PUBLIC_LK_SERVER_URL) {
 }
 
 export function ChatVoice() {
+  const { user } = usePUser();
+  const champSelect = useChampSelect();
   const [token, setToken] = useState(null); // Estado para armazenar o token
   const [loading, setLoading] = useState(true); // Estado para controlar o carregamento
 
@@ -16,7 +20,13 @@ export function ChatVoice() {
   useEffect(() => {
     async function fetchToken() {
       try {
-        const response = await fetch('http://localhost:3333/chat-token');
+        const response = await fetch('http://localhost:3333/chat-token',{
+          method: 'POST',
+          body: JSON.stringify({ 
+            roomName: `Room-${champSelect?.gameId ?? Math.random()}`,
+            participantName: user
+          }),
+        });
 
         const data = await response.json();
         
@@ -30,6 +40,10 @@ export function ChatVoice() {
 
     fetchToken(); // Chama a função assim que o componente é montado
   }, []);
+
+  if(!champSelect) {
+    return <p>Entre na champion select para poder entrar em uma sala de voz.</p>
+  }
 
   // Renderiza uma mensagem de carregamento enquanto busca o token
   if (loading) {

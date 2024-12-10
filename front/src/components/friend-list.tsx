@@ -5,27 +5,33 @@ import { AddFriendDialog } from './add-friend-dialog'
 import { MessageCard } from './message-card'
 import { usePUser } from '@/hooks/usePUser'
 import { useChats } from '@/hooks/useChats'
-import { u } from '@tauri-apps/api/path-f8d71c21'
 
 const FriendList: React.FC = () => {
   const user = usePUser()
   const { chats, addMessage, setChats } = useChats()
   const [isMessageCardOpen, setIsMessageCardOpen] = React.useState(false)
-  const [selectedFriend, setSelectedFriend] = React.useState<string>(
-    user.user.friends[0]?.id
-  )
+  const [selectedFriend, setSelectedFriend] = React.useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    if (user.user && user.user.friends.length > 0) {
+      setSelectedFriend(user.user.friends[0]?.id)
+    }
+  }, [user.user])
 
   const fetchChats = async () => {
-    await setChats(selectedFriend)
+    if (selectedFriend) {
+      await setChats(selectedFriend)
+    }
   }
 
   useEffect(() => {
-    fetchChats()
-    const interval = setInterval(() => {
-      setChats(selectedFriend)
-      user.setUser(user.user.id, user.user.image, user.user.name)
-    }, 1000)
-    return () => clearInterval(interval)
+    if (selectedFriend) {
+      fetchChats()
+      const interval = setInterval(() => {
+        setChats(selectedFriend)
+      }, 1000)
+      return () => clearInterval(interval)
+    }
   }, [selectedFriend])
 
   const handleSendMessage = async (newMessage: string) => {
@@ -37,6 +43,10 @@ const FriendList: React.FC = () => {
   const currentChat = chats.find(
     (chat) => chat.user1Id === selectedFriend || chat.user2Id === selectedFriend
   )
+
+  if (!user.user) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="h-full w-64 bg-[#101010] text-white">
@@ -78,16 +88,18 @@ const FriendList: React.FC = () => {
           </div>
         ))}
       </div>
-      <MessageCard
-        isOpen={isMessageCardOpen}
-        onClose={() => setIsMessageCardOpen(false)}
-        selectedFriend={selectedFriend}
-        onSelectFriend={setSelectedFriend}
-        friends={user.user.friends}
-        currentChat={currentChat}
-        onSendMessage={handleSendMessage}
-        userId={user.user.id}
-      />
+      {selectedFriend && (
+        <MessageCard
+          isOpen={isMessageCardOpen}
+          onClose={() => setIsMessageCardOpen(false)}
+          selectedFriend={selectedFriend}
+          onSelectFriend={setSelectedFriend}
+          friends={user.user.friends}
+          currentChat={currentChat}
+          onSendMessage={handleSendMessage}
+          userId={user.user.id}
+        />
+      )}
     </div>
   )
 }
