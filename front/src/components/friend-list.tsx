@@ -1,16 +1,20 @@
-import React, { useEffect } from 'react'
-import { Lock, MessageSquare, Search } from 'lucide-react'
-import { Button } from './ui/button'
-import { AddFriendDialog } from './add-friend-dialog'
-import { MessageCard } from './message-card'
-import { usePUser } from '@/hooks/usePUser'
-import { useChats } from '@/hooks/useChats'
+import React, { useEffect } from "react"
+import { Lock, MessageSquare, Search } from "lucide-react"
+
+import { useChats } from "@/hooks/useChats"
+import { usePUser } from "@/hooks/usePUser"
+
+import { AddFriendDialog } from "./add-friend-dialog"
+import { MessageCard } from "./message-card"
+import { Button } from "./ui/button"
 
 const FriendList: React.FC = () => {
   const user = usePUser()
   const { chats, addMessage, setChats } = useChats()
   const [isMessageCardOpen, setIsMessageCardOpen] = React.useState(false)
-  const [selectedFriend, setSelectedFriend] = React.useState<string | undefined>(undefined)
+  const [selectedFriend, setSelectedFriend] = React.useState<
+    string | undefined
+  >(undefined)
 
   useEffect(() => {
     if (user.user && user.user.friends.length > 0) {
@@ -45,7 +49,11 @@ const FriendList: React.FC = () => {
   )
 
   if (!user.user) {
-    return <div>Loading...</div>
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center">
+        Loading...
+      </div>
+    )
   }
 
   return (
@@ -72,7 +80,12 @@ const FriendList: React.FC = () => {
               className="h-10 w-10 rounded-full"
             />
             <div className="flex-1">
-              <span title={friend.name} className="text-sm font-medium max-w-[100px] overflow-hidden whitespace-nowrap text-ellipsis block">{friend.name}</span>
+              <span
+                title={friend.name}
+                className="block max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium"
+              >
+                {friend.name}
+              </span>
             </div>
             <MessageSquare
               className="h-5 w-5 cursor-pointer hover:text-gray-300"
@@ -81,10 +94,13 @@ const FriendList: React.FC = () => {
                 setSelectedFriend(friend.id)
               }}
             />
-            <Lock onClick={() => {
-              user.blockFriend(user.user.id, friend.id);
-              user.blockFriend(friend.id, user.user.id);
-            }} className="h-5 w-5 cursor-pointer hover:text-gray-300" />
+            <Lock
+              onClick={() => {
+                user.blockFriend(user.user.id, friend.id)
+                user.blockFriend(friend.id, user.user.id)
+              }}
+              className="h-5 w-5 cursor-pointer hover:text-gray-300"
+            />
           </div>
         ))}
       </div>

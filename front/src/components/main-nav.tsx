@@ -10,28 +10,10 @@ export function MainNav({
       {...props}
     >
       <a
-        href="/examples/dashboard"
-        className="text-sm font-medium transition-colors hover:text-primary"
-      >
-        Overview
-      </a>
-      <a
         href="/chat-voice"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        Chat Voice
-      </a>
-      <a
-        href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Products
-      </a>
-      <a
-        href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Settings
+        Chat de Voz
       </a>
     </nav>
   )
